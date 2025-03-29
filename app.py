@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, g
 import sqlite3
+import bcrypt  # Import bcrypt for password hashing
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -28,19 +29,17 @@ def init_db():
         db.commit()
 
 @app.route('/', methods=['GET', 'POST'])
-def home():  # Renamed from 'login' to 'home'
+def home():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
         db = get_db()
-        user = db.execute('SELECT * FROM users WHERE username = ? AND password = ?',
-                          (username, password)).fetchone()
-        if user:
+        user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             session['user'] = user['username']
             return redirect(url_for('tracker'))
         return render_template('login.html', error="Invalid credentials")
     return render_template('login.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -48,14 +47,12 @@ def login():
         username = request.form['username']
         password = request.form['password']
         db = get_db()
-        user = db.execute('SELECT * FROM users WHERE username = ? AND password = ?',
-                          (username, password)).fetchone()
-        if user:
+        user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             session['user'] = user['username']
             return redirect(url_for('tracker'))
         return render_template('login.html', error="Invalid credentials")
-    return render_template('login.html')  # Handles GET requests
-
+    return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -73,13 +70,15 @@ def register():
         if db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone():
             return render_template('register.html', error="Username already exists")
 
+        # Hash the password before storing it
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
         # Insert new user into the database
-        db.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
+        db.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
         db.commit()
         return redirect(url_for('login'))
 
     return render_template('register.html')
-
 
 @app.route('/tracker', methods=['GET', 'POST'])
 def tracker():
