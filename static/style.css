@@ -1,0 +1,130 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #eef2f3;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #4a4a4a;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 700px; /* Wider for more space */
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+p {
+    font-size: 16px;
+    color: #555555;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+button.logout-btn {
+    background: #dc3545; /* A strong red for logout */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    float: right;
+    font-size: 14px;
+}
+
+button.logout-btn:hover {
+    background: #c82333; /* Slightly darker hover effect */
+}
+
+form {
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+input[type="submit"] {
+    background: #28a745; /* Green
+
+button.remove-btn {
+    background: #ffc107; /* Yellow */
+    color: #333;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+button.remove-btn:hover {
+    background: #e0a800; /* Slightly darker yellow on hover */
+}
+/* Add Expense Button - Bold and Black */
+input[type="submit"] {
+    background: #28a745; /* Green background */
+    color: black; /* Black text */
+    font-weight: bold; /* Bold font */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background: #218838; /* Slightly darker green on hover */
+}
+
+.action {
+    text-align: center;
+}
+
+/* Align "Amount (PHP)" and Total Expenses Amount */
+.amount {
+    text-align: right;
+}
+
+tfoot .amount {
+    text-align: right; /* Align the total to the right */
+}
+table {
+    width: 100%;
+}
+
+button.remove-btn {
+    background: #f5d60f; /* Yellow background */
+    color: black; /* Black text for visibility */
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    display: block; /* Set block display to allow centering */
+    margin: 0 auto; /* Center-align within the cell */
+}
+
+button.remove-btn:hover {
+    background: #ffdd00; /* Darker yellow on hover for effect */
+}
+
