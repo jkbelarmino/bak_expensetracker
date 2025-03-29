@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Expense Tracker</title>
+</head>
+<body>
+    <div class="container">
+        <p>Welcome {{ username }}!</p>
+        <button class="logout-btn" onclick="window.location.href='/logout'">Logout</button>
+        <h2>Expense Tracker</h2>
+
+        <!-- Form for adding expenses -->
+        <form method="POST" action="/tracker">
+            <label for="description">Item Description:</label><br>
+            <input type="text" id="description" name="description" required><br>
+
+            <label for="amount">Amount (PHP):</label><br>
+            <input type="number" id="amount" name="amount" step="0.01" required><br>
+
+            <input type="submit" value="Add Expense">
+        </form>
+        <br><br>
+        <table border="1" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 60%;">Item Description</th>
+                    <th style="width: 20%;" class="amount">Amount (PHP)</th>
+                    <th style="width: 20%;" class="action">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.description }}</td>
+                    <td class="amount">{{ '%.2f'|format(expense.amount) }}</td> <!-- 2 decimal points -->
+                    <td><button class="remove-btn" onclick="removeExpense(this)">Remove</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total Expenses</th>
+                    <th class="amount">PHP {{ '%.2f'|format(total) }}</th> <!-- Align right -->
+                    <th>&nbsp;</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>
