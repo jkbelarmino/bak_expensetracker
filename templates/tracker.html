@@ -3,6 +3,23 @@
 <head>
     <link rel="stylesheet" href="/static/style.css">
     <title>Expense Tracker</title>
+    <script>
+        function toggleEdit(button, expenseId) {
+    const row = button.closest('tr');
+    const textElements = row.querySelectorAll('.expense-text');
+    const inputElements = row.querySelectorAll('.edit-input');
+    const saveBtn = row.querySelector('.save-btn');
+
+    textElements.forEach(el => el.style.display = 'none');
+    inputElements.forEach(el => el.style.display = 'inline');
+    saveBtn.style.display = 'inline';
+
+    saveBtn.addEventListener('click', function() {
+        row.querySelector('input[name="new_description"]').value = row.querySelector('input[name="edit_description"]').value;
+        row.querySelector('input[name="new_amount"]').value = row.querySelector('input[name="edit_amount"]').value;
+    });
+}
+    </script>
 </head>
 <body>
     <div class="container">
@@ -18,30 +35,59 @@
             <label for="amount">Amount (PHP):</label><br>
             <input type="number" id="amount" name="amount" step="0.01" required><br>
 
-            <input type="submit" value="Add Expense">
+            <div class="add-expense-container">
+                <input type="submit" value="Add Expense">
+            </div>
+
+
         </form>
         <br><br>
-        <table border="1" style="width: 100%;">
+        <table class="expense-table" cellspacing=0 cellpadding=0 style="width: 100%;">
             <thead>
                 <tr>
-                    <th style="width: 60%;">Item Description</th>
+                    <th style="width: 50%;">Item Description</th>
                     <th style="width: 20%;" class="amount">Amount (PHP)</th>
-                    <th style="width: 20%;" class="action">Action</th>
+                    <th style="width: 30%;" class="action" colspan=3>Action</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% for expense in expenses %}
                 <tr>
-                    <td>{{ expense.description }}</td>
-                    <td class="amount">{{ '%.2f'|format(expense.amount) }}</td> <!-- 2 decimal points -->
-                    <td><button class="remove-btn" onclick="removeExpense(this)">Remove</button></td>
+                    <td>
+                        <span class="expense-text">{{ expense.description }}</span>
+                        <input type="text" class="edit-input" name="edit_description" value="{{ expense.description }}" style="display:none;">
+                    </td>
+                    <td class="amount">
+                        <span class="expense-text">{{ '%.2f'|format(expense.amount) }}</span>
+                        <input type="number" class="edit-input" name="edit_amount" value="{{ expense.amount }}" step="0.01" style="display:none;">
+                    </td>
+                    <td style="width: 10%;">
+                        <center>
+                        <button class="edit-btn" onclick="toggleEdit(this, {{ expense.id }})">Edit</button>
+                        </center>
+                    </td>
+                    <td style="width: 10%;">
+                        <form method="POST" action="/edit_expense" style="display:inline;">
+                            <input type="hidden" name="expense_id" value="{{ expense.id }}">
+                            <input type="hidden" name="new_description">
+                            <input type="hidden" name="new_amount">
+                            <button type="submit" class="save-btn" style="display:none;">Save</button>
+                        </form>
+                     </td>
+                     <td style="width: 10%;">
+                        <button class="remove-btn" onclick="removeExpense(this)">Remove</button>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
+
             <tfoot>
                 <tr>
                     <th>Total Expenses</th>
                     <th class="amount">PHP {{ '%.2f'|format(total) }}</th> <!-- Align right -->
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                     <th>&nbsp;</th>
                 </tr>
             </tfoot>
