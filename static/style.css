@@ -64,23 +64,6 @@ input[type="text"], input[type="number"] {
 }
 
 input[type="submit"] {
-    background: #28a745; /* Green
-
-button.remove-btn {
-    background: #ffc107; /* Yellow */
-    color: #333;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-button.remove-btn:hover {
-    background: #e0a800; /* Slightly darker yellow on hover */
-}
-/* Add Expense Button - Bold and Black */
-input[type="submit"] {
     background: #28a745; /* Green background */
     color: black; /* Black text */
     font-weight: bold; /* Bold font */
@@ -101,20 +84,18 @@ input[type="submit"]:hover {
 }
 
 /* Align "Amount (PHP)" and Total Expenses Amount */
-.amount {
+.amount, tfoot .amount {
     text-align: right;
 }
 
-tfoot .amount {
-    text-align: right; /* Align the total to the right */
-}
 table {
     width: 100%;
+    border-collapse: collapse;
 }
 
 button.remove-btn {
-    background: #f5d60f; /* Yellow background */
-    color: black; /* Black text for visibility */
+    background: #dc3545;
+    color: #FFFFFF;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
@@ -125,6 +106,63 @@ button.remove-btn {
 }
 
 button.remove-btn:hover {
-    background: #ffdd00; /* Darker yellow on hover for effect */
+    background: #dc3545;
 }
 
+button.edit-btn {
+    background: #f5d60f; /* Yellow */
+    color: black;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+button.edit-btn:hover {
+    background: #ffdd00; /* Darker yellow on hover */
+}
+
+button.save-btn {
+    background: #28a745; /* Green */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+button.save-btn:hover {
+    background: #218838;
+}
+
+.expense-table th, .expense-table td {
+    border-bottom: 1px solid black; /* Only show horizontal lines */
+    padding: 10px;
+}
+
+.expense-table th {
+    border-top: 1px solid black; /* Ensure the top row has a border */
+}
+
+.add-expense-container {
+    display: flex;
+    justify-content: flex-end; /* Moves the button to the right */
+}
+
+input[type="submit"] {
+    background: #28a745; /* Green */
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background: #218838; /* Darker green on hover */
+}
