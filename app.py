@@ -96,6 +96,25 @@ def tracker():
         return redirect(url_for('tracker'))
     return render_template('tracker.html', username=session['user'], expenses=expenses, total=total)
 
+
+@app.route('/edit_expense', methods=['POST'])
+def edit_expense():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+
+    expense_id = request.form['expense_id']
+    new_description = request.form['new_description']
+    new_amount = float(request.form['new_amount'])
+
+    db = get_db()
+    db.execute('UPDATE expenses SET description = ?, amount = ? WHERE id = ?',
+               (new_description, new_amount, expense_id))
+    db.commit()
+
+    return redirect(url_for('tracker'))
+
+
+
 @app.route('/logout')
 def logout():
     session.clear()
